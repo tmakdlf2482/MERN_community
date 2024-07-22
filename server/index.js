@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // post.js에서 export한 router를 사용
 app.use('/api/post', require('./Router/post.js')); // /api/post는 공통적으로 routing 규칙이 적용되는 부분
+// user.js에서 export한 router를 사용
+app.use('/api/user', require('./Router/user.js')); // /api/user는 공통적으로 routing 규칙이 적용되는 부분
 
 // express 서버가 열리면
 // 1. MongoDB와 연결 시도
