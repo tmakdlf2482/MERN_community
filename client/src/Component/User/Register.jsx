@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import LoginDiv from '../../Style/UserCSS';
 
 import firebase from '../../firebase.js';
