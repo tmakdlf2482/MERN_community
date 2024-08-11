@@ -21,9 +21,10 @@ function RepleUpload(props) {
 
     axios.post('/api/reple/submit', body)
     .then((response) => {
-      setReple('');
+      // setReple('');
       if (response.data.success) {
         alert('댓글 작성이 성공하였습니다.');
+        window.location.reload(); // 새로고침
       }
       else {
         alert('댓글 작성이 실패하였습니다.');

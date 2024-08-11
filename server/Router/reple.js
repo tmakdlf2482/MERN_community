@@ -29,4 +29,15 @@ router.post('/submit', (req, res) => {
   })
 });
 
+router.post('/getReple', (req, res) => {
+  Reple.find({postId: req.body.postId})
+  .populate('author').exec()
+  .then((repleInfo) => {
+    return res.status(200).json({success: true, repleList: repleInfo,});
+  })
+  .catch((err) => {
+    return res.status(400).json({success: false});
+  })
+});
+
 module.exports = router;
