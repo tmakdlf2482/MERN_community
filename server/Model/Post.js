@@ -9,6 +9,10 @@ const postSchema = new mongoose.Schema({ // 모델에 어떤 데이터들이 들
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  repleNum: { // 댓글 갯수
+    type: Number,
+    default: 0,
+  },
 }, {collection: 'posts'}); // MongoDB에서 collection이름을 posts라고 지정 (테이블 이름을 posts라고 정했다 보면됨)
 
 const Post = mongoose.model('Post', postSchema); // 모델의 이름 : Post
