@@ -43,11 +43,20 @@ function App() {
       <Heading />
       <Routes>
         <Route path="/" element={<List />}></Route>
+        {/* Post, Reple */}
         <Route path="/upload" element={<Upload />}></Route>
         <Route path="/post/:postNum" element={<PostArea />}></Route>
         <Route path="/edit/:postNum" element={<Edit />}></Route>
+
+        {/* User */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+
+        {/* 
+        1. 검색
+        2. 유저 프로필 이미지 + 원하는 이미지로 바꾸기
+        3. 정렬 (최신순 / 인기순 : repleNum)
+        */}
       </Routes>
     </BrowserRouter>
   )
