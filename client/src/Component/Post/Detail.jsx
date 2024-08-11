@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { PostDiv, SpinnerDiv, Post, BtnDiv } from '../../Style/PostDetailCSS.js';
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom';
 function Detail() {
   let params = useParams(); // 유저가 :postNum 자리에 적은거 가져와줌
   let navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   // console.log(params);
   // console.log(params.postNum);
   // console.log(typeof(params.postNum)); // string
@@ -71,18 +73,21 @@ function Detail() {
           <>
             <Post>
               <h1>{PostInfo.title}</h1>
+              <h3>{PostInfo.author.displayName}</h3>
               {/* PostInfo에 이미지가 있는지 없는지부터 체크  */}
               {
                 PostInfo.image ? <img src={PostInfo.image} alt="" style={{width: "100%", height: "auto"}} /> : null
               }
               <p>{PostInfo.content}</p>
             </Post>
-            <BtnDiv>
-              <Link to={`/edit/${PostInfo.postNum}`}>
-                <button className='edit'>수정</button>
-              </Link>
-              <button className='delete' onClick={() => { DeleteHandler() }}>삭제</button>
-            </BtnDiv>
+            {user.uid === PostInfo.author.uid && 
+              <BtnDiv>
+                <Link to={`/edit/${PostInfo.postNum}`}>
+                  <button className='edit'>수정</button>
+                </Link>
+                <button className='delete' onClick={() => { DeleteHandler() }}>삭제</button>
+              </BtnDiv>
+            }
           </>
         )
           :

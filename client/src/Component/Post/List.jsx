@@ -45,10 +45,12 @@ function List(props) {
   return (
     <ListDiv>
       {PostList.map((post, index) => {
+          console.log(post); // author로 유저의 정보가 넘어옴
           return (
             <ListItem key={index}>
               <Link to={`/post/${post.postNum}`}>
                 <p className='title'>{post.title}</p>
+                <p className="author">{post.author.displayName}</p>
                 <p>{post.content}</p>
               </Link>
             </ListItem>

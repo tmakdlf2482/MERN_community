@@ -11,10 +11,15 @@ const { Post } = require('../Model/Post.js') // Post.js 에서 export한 Post �
 // 새로운 모델을 불러옴
 const { Counter } = require('../Model/Counter.js');
 const { CognitoIdentity } = require('aws-sdk');
+const { User } = require('../Model/User.js')
 
 // app.post를 router.post로 모조리 바꿔주기!
 router.post('/submit', (req, res) => { // 원래 /api/post/submit 이였음, 하지만 index.js 20번째 줄에서 /api/post를 정의해 줬음, 따라서 /submit만 남김
-  let temp = req.body;
+  let temp = {
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image, // image: 이거는 Post모델(Post.js)에서 image: String 이거임
+  };
 
   // console.log(temp);
 
@@ -26,15 +31,19 @@ router.post('/submit', (req, res) => { // 원래 /api/post/submit 이였음, 하
       // console.log(temp);
       // console.log(counter);
 
-      const CommunityPost = new Post(temp);
-      CommunityPost.save()
-        .then(() => {
-          // updateOne({어떤 document를 업데이트 시킬것인지 선택}, {어떻게 업데이트를 시킬 것인지 선택})
-          Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }) // name 필드가 'counter'인 postNum값을 1씩 더해줌
-            .then(() => {
-              res.status(200).json({ success: true });
-            });
-        })
+      User.findOne({uid: req.body.uid}).exec()
+      .then((userInfo) => {
+        temp.author = userInfo._id;
+        const CommunityPost = new Post(temp);
+        CommunityPost.save()
+          .then(() => {
+            // updateOne({어떤 document를 업데이트 시킬것인지 선택}, {어떻게 업데이트를 시킬 것인지 선택})
+            Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }) // name 필드가 'counter'인 postNum값을 1씩 더해줌
+              .then(() => {
+                res.status(200).json({ success: true });
+              });
+          });
+      })
     })
     .catch((err) => {
       res.status(400).json({ success: false });
@@ -42,7 +51,9 @@ router.post('/submit', (req, res) => { // 원래 /api/post/submit 이였음, 하
 });
 
 router.post('/list', (req, res) => { // 원래 /api/post/list 이였음, 하지만 index.js 20번째 줄에서 /api/post를 정의해 줬음, 따라서 /list만 남김
-  Post.find().exec()
+  Post.find()
+    .populate('author')
+    .exec()
     .then((doc) => {
       res.status(200).json({ success: true, postList: doc });
     })
@@ -52,7 +63,9 @@ router.post('/list', (req, res) => { // 원래 /api/post/list 이였음, 하지�
 });
 
 router.post('/detail', (req, res) => { // 원래 /api/post/detail 이였음, 하지만 index.js 20번째 줄에서 /api/post를 정의해 줬음, 따라서 /detail만 남김
-  Post.findOne({postNum: Number(req.body.postNum)}).exec() // Post Document에 있는 postNum과 req.body.postNum이 일치하는 것을 찾기
+  Post.findOne({postNum: Number(req.body.postNum)})
+  .populate('author')
+  .exec() // Post Document에 있는 postNum과 req.body.postNum이 일치하는 것을 찾기
   .then((doc) => {
     // console.log(doc);
     res.status(200).json({success: true, post: doc});

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // 현재 유저의 로그인 정보를 불러옴
 import { UploadDiv, UploadForm, UploadButtonDiv } from '../../Style/UploadCSS.js';
 import axios from 'axios';
 import ImageUpload from './ImageUpload.jsx';
@@ -10,7 +11,15 @@ function Upload(props) {
   const [Image, setImage] = useState("");
 
   let navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (!user.accessToken) {
+      alert('로그인한 회원만 글을 작성할 수 있습니다.');
+      navigate('/login');
+    }
+  }, []);
+  
   const onSubmit = (e) => {
     e.preventDefault(); // 버튼을 눌렀을 때 새로고침 되지 않음
 
@@ -23,7 +32,8 @@ function Upload(props) {
       title: Title,
       content: Content,
       image: Image, // image: 이거는 Post모델(Post.js)에서 image: String 이거임
-    }
+      uid: user.uid, // firebase에서 부여하는 사용자의 고유 id
+    };
 
     axios.post('/api/post/submit', body)
     .then((response) => {

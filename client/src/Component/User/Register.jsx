@@ -32,7 +32,7 @@ function Register() {
     });
 
     // console.log(createdUser.user);
-
+    
     let body = {
       displayName: createdUser.user.multiFactor.user.displayName,
       email: createdUser.user.multiFactor.user.email,
