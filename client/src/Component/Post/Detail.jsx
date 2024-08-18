@@ -47,9 +47,9 @@ function Detail(props) {
 
   const SetTime = (a, b) => {
     if (a !== b) {
-      return moment(b).format("YYYY년 MMMM Do, hh:mm") + "(수정됨)";
+      return moment(b).format("YYYY.M.D. hh:mm") + "(수정됨)";
     } else {
-      return moment(a).format("YYYY년 MMMM Do, hh:mm");
+      return moment(a).format("YYYY.M.D. hh:mm");
     }
   };
 
@@ -84,10 +84,12 @@ function Detail(props) {
         <h1>{props.PostInfo.title}</h1>
         <div className="author">
           <Avatar size='40' round={true} src={props.PostInfo.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
-          <p>{props.PostInfo.author.displayName}</p>
-          <p className='time'>
-            {SetTime(props.PostInfo.createdAt, props.PostInfo.updatedAt)}
-          </p>
+          <div>
+            <p>{props.PostInfo.author.displayName}</p>
+            <p className='time'>
+              {SetTime(props.PostInfo.createdAt, props.PostInfo.updatedAt)}
+            </p>
+          </div>
         </div>
         {/* PostInfo에 이미지가 있는지 없는지부터 체크  */}
         {

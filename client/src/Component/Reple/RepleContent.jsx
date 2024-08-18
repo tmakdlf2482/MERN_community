@@ -21,9 +21,9 @@ function RepleContent(props) {
 
   const SetTime = (a, b) => {
     if (a !== b) {
-      return moment(b).format("YYYY년 MMMM Do, hh:mm") + "(수정됨)";
+      return moment(b).format("YYYY.M.D. hh:mm") + "(수정됨)";
     } else {
-      return moment(a).format("YYYY년 MMMM Do, hh:mm");
+      return moment(a).format("YYYY.M.D. hh:mm");
     }
   };
 
