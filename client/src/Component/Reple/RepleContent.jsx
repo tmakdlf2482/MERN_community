@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Avatar from 'react-avatar';
 
+import moment from "moment";
+import "moment/locale/ko";
+
 // modal을 다른곳을 클릭하면 열었던 모달은 닫히고 클릭한 모달이 열려야함 -> useOnClickOutside hook으로 구현
 
 function RepleContent(props) {
@@ -15,6 +18,14 @@ function RepleContent(props) {
   const user = useSelector((state) => state.user);
   const ref = useRef();
   useOnClickOutside(ref, () => setModalFlag(false));
+
+  const SetTime = (a, b) => {
+    if (a !== b) {
+      return moment(b).format("YYYY년 MMMM Do, hh:mm") + "(수정됨)";
+    } else {
+      return moment(a).format("YYYY년 MMMM Do, hh:mm");
+    }
+  };
 
   const SubmitHandler = (e) => {
     e.preventDefault();
@@ -66,23 +77,28 @@ function RepleContent(props) {
   return (
     <RepleContentDiv>
       <div className="author">
-        <Avatar size='30' round={true} src={props.reple.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
-        <p>{props.reple.author.displayName}</p>
+        <div className='userInfo'>
+          <Avatar size='30' round={true} src={props.reple.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
+          <p>{props.reple.author.displayName}</p>
+        </div>
         {
           props.reple.author.uid === user.uid &&
-          <div className="modalControl">
+          (<div className="modalControl">
             <span onClick={() => {setModalFlag(true)}}>···</span>
             {ModalFlag &&
-              <div className="modalDiv" ref={ref}>
+              (<div className="modalDiv" ref={ref}>
                 <p onClick={() => {setEditflag(true); setModalFlag(false);}}>수정</p>
                 <p className="delete" onClick={(e) => {DeleteHandler(e)}}>삭제</p>
-              </div>
+              </div>)
             }
-          </div>
+          </div>)
         }
       </div>
+      <p className='time'>
+        {SetTime(props.reple.createdAt, props.reple.updatedAt)}
+      </p>
       {Editflag ?
-        <RepleUploadDiv>
+        (<RepleUploadDiv>
           <form>
             <input type="text" value={Reple} onChange={(e) => {setReple(e.target.value)}}/>
             <button onClick={(e) => {SubmitHandler(e)}}>등록</button>
@@ -90,9 +106,9 @@ function RepleContent(props) {
           <div className='cancel'>
             <button onClick={(e) => {e.preventDefault(); setEditflag(false)}}>취소</button>
           </div>
-        </RepleUploadDiv>
+        </RepleUploadDiv>)
         :
-        <p>{props.reple.reple}</p>
+        (<p>{props.reple.reple}</p>)
       }
     </RepleContentDiv>
   );
