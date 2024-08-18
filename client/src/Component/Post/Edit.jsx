@@ -81,7 +81,7 @@ function Edit() {
         <input id='title' type="text" defaultValue={PostInfo.title} onChange={(e) => { setTitle(e.target.value) }} />
         <ImageUpload setImage={setImage} />
         <label htmlFor="content">내용</label>
-        <textarea id='content' value={PostInfo.content} onChange={(e) => { setContent(e.target.value) }} />
+        <textarea id='content' value={Content} onChange={(e) => { setContent(e.target.value) }} />
         <UploadButtonDiv>
           {/* naviate(-1)은 뒤로가기 기능 */}
           {/* 취소 버튼은 폼에 종속되어 있어서 취소 버튼을 클릭하는 순간 새로고침이 됨, 새로고침 상태에서 한번 뒤로가기 하면 다시 원래 페이지가 됨 */}

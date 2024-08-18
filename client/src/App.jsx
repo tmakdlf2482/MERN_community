@@ -5,7 +5,8 @@ import { loginUser, clearUser } from './Reducer/userSlice.js';
 import firebase from './firebase'; // 로그인 추적
 
 import Heading from './Component/Heading';
-import List from './Component/Post/List';
+import MainPage from './Component/MainPage';
+
 import Upload from './Component/Post/Upload';
 import PostArea from './Component/Post/PostArea';
 // import Detail from './Component/Post/Detail';
@@ -44,7 +45,7 @@ function App() {
     <BrowserRouter>
       <Heading />
       <Routes>
-        <Route path="/" element={<List />}></Route>
+        <Route path="/" element={<MainPage />}></Route>
         {/* Post, Reple */}
         <Route path="/upload" element={<Upload />}></Route>
         <Route path="/post/:postNum" element={<PostArea />}></Route>
