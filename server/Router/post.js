@@ -51,8 +51,21 @@ router.post('/submit', (req, res) => { // 원래 /api/post/submit 이였음, 하
 });
 
 router.post('/list', (req, res) => { // 원래 /api/post/list 이였음, 하지만 index.js 20번째 줄에서 /api/post를 정의해 줬음, 따라서 /list만 남김
-  Post.find()
+  let sort = {};
+
+  if (req.body.sort === '최신순') {
+    sort.createdAt = -1;
+  }
+  else {
+    // 인기순
+    sort.repleNum = -1;
+  }
+
+  Post.find({$or : [{ title: { $regex: req.body.searchTerm }}, { content: { $regex: req.body.searchTerm } }]})
     .populate('author')
+    .sort(sort)
+    .skip(req.body.skip) // 0번째부터 document를 찾음, 5번째부터 document를 찾음
+    .limit(5) // 한번에 찾을 document의 숫자
     .exec()
     .then((doc) => {
       res.status(200).json({ success: true, postList: doc });

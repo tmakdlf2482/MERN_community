@@ -64,11 +64,15 @@ function List(props) {
               <Link to={`/post/${post.postNum}`}>
                 <p className='title'>{post.title}</p>
                 <div className='author'>
-                  <Avatar size='40' round={true} src={post.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
-                  <p>{post.author.displayName}</p>
+                  <div>
+                    <Avatar size='40' round={true} src={post.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
+                    <p>{post.author.displayName}</p>
+                  </div>
+                  <p className='time'>
+                    {SetTime(post.createdAt, post.updatedAt)}
+                  </p>
                 </div>
                 <p>{post.content}</p>
-                <p>{SetTime(post.createdAt, post.updatedAt)}</p>
               </Link>
             </ListItem>
           );
@@ -78,4 +82,4 @@ function List(props) {
   )
 }
 
-export default List
+export default List;
