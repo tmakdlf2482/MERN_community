@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
+import Avatar from 'react-avatar';
 import axios from 'axios';
 import { PostDiv, SpinnerDiv, Post, BtnDiv } from '../../Style/PostDetailCSS.js';
 // import Spinner from 'react-bootstrap/Spinner';
@@ -71,10 +72,13 @@ function Detail(props) {
       { // Flag가 true이면 axios 통신이 끝났다(PostInfo 데이터가 서버에서 프론트쪽으로 넘어왔다)는 뜻이고,
         // Flag가 false이면 axios 통신이 덜 끝남(PostInfo 데이터가 서버에서 프론트쪽으로 아직 넘어오지 못함)
         // Flag ? (
-          <>
+          <PostDiv>
             <Post>
               <h1>{props.PostInfo.title}</h1>
-              <p className="author">{props.PostInfo.author.displayName}</p>
+              <p className="author">
+                <Avatar size='40' round={true} src={props.PostInfo.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
+                {props.PostInfo.author.displayName}
+              </p>
               {/* PostInfo에 이미지가 있는지 없는지부터 체크  */}
               {
                 props.PostInfo.image ? <img src={props.PostInfo.image} alt="" style={{width: "100%", height: "auto"}} /> : null
@@ -89,7 +93,7 @@ function Detail(props) {
                 <button className='delete' onClick={() => { DeleteHandler() }}>삭제</button>
               </BtnDiv>
             }
-          </>
+          </PostDiv>
         // )
         // :
         // (

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import LoginDiv from '../../Style/UserCSS.js';
+import React, { useState, useEffect } from 'react';
+import { LoginDiv } from '../../Style/UserCSS.js';
 import { useNavigate } from 'react-router-dom';
 
 import firebase from '../../firebase.js';

@@ -3,6 +3,7 @@ import { RepleContentDiv, RepleUploadDiv } from '../../Style/RepleCSS.js';
 import { useSelector } from 'react-redux';
 
 import axios from 'axios';
+import Avatar from 'react-avatar';
 
 // modal을 다른곳을 클릭하면 열었던 모달은 닫히고 클릭한 모달이 열려야함 -> useOnClickOutside hook으로 구현
 
@@ -65,6 +66,7 @@ function RepleContent(props) {
   return (
     <RepleContentDiv>
       <div className="author">
+        <Avatar size='30' round={true} src={props.reple.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
         <p>{props.reple.author.displayName}</p>
         {
           props.reple.author.uid === user.uid &&

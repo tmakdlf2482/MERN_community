@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Avatar from 'react-avatar';
 import { Link } from 'react-router-dom';
 import { ListDiv, ListItem } from '../../Style/ListCSS.js';
 
@@ -50,6 +51,7 @@ function List(props) {
             <ListItem key={index}>
               <Link to={`/post/${post.postNum}`}>
                 <p className='title'>{post.title}</p>
+                <Avatar size='40' round={true} src={post.author.photoURL} style={{border: '1px solid #c6c6c6'}} />
                 <p className="author">{post.author.displayName}</p>
                 <p>{post.content}</p>
               </Link>

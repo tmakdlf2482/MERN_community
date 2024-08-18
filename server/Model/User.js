@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({ // 모델에 어떤 데이터들이 들
   displayName: String, // 사용자의 이름
   email: String, // 사용자의 이메일
   uid: String, // 사용자별 uid
+  photoURL: String, // 사용자별 프로필 이미지
 }, {collection: 'users'}); // MongoDB에서 collection이름을 posts라고 지정 (테이블 이름을 posts라고 정했다 보면됨)
 
 const User = mongoose.model('User', userSchema); // 모델의 이름 : Post

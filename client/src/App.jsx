@@ -13,6 +13,7 @@ import Edit from './Component/Post/Edit';
 
 import Login from "./Component/User/Login";
 import Register from "./Component/User/Register";
+import MyPage from './Component/User/MyPage';
 
 function App() {
   let dispatch = useDispatch();
@@ -20,6 +21,7 @@ function App() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userInfo) => {
+      console.log(userInfo);
       // console.log("userInfo : ", userInfo); // 로그아웃, 로그인 하지 않았을 경우 null 출력 / 로그인 했다면 로그인된 상태정보 출력
       if (userInfo !== null) {
         dispatch(loginUser(userInfo.multiFactor.user));
@@ -51,6 +53,7 @@ function App() {
         {/* User */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/mypage" element={<MyPage />}></Route>
 
         {/* 
         1. 검색

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LoginDiv from '../../Style/UserCSS';
+import { LoginDiv } from '../../Style/UserCSS';
 
 import firebase from '../../firebase.js';
 import axios from 'axios';
@@ -34,6 +34,7 @@ function Register() {
 
     await createdUser.user.updateProfile({
       displayName: Name,
+      photoURL: 'https://kr.object.ncloudstorage.com/react-community5/post/profile.png',
     });
 
     // console.log(createdUser.user);
@@ -42,6 +43,7 @@ function Register() {
       displayName: createdUser.user.multiFactor.user.displayName,
       email: createdUser.user.multiFactor.user.email,
       uid: createdUser.user.multiFactor.user.uid,
+      photoURL: 'https://kr.object.ncloudstorage.com/react-community5/post/profile.png',
     };
 
     axios.post('/api/user/register', body)
